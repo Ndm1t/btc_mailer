@@ -11,8 +11,6 @@ services:
     depends_on:
       - postgres
       - prometheus
-    environment:
-      PROMETHEUS_PORT: 9100
     env_file:
       - .env
 
@@ -32,7 +30,7 @@ services:
     image: prom/prometheus
     container_name: prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
 
