@@ -1,8 +1,9 @@
 import { Controller, Get, Body, Post, Delete } from "@nestjs/common";
 import { EmailService } from "./email.service";
 import { Prisma } from "@prisma/client";
+import { CreateEmailDto } from "./create-email.dto";
 
-@Controller("email")
+@Controller("emails")
 export class EmailController {
   constructor(private readonly emailService: EmailService) {}
 
@@ -11,11 +12,11 @@ export class EmailController {
     return this.emailService.findAll();
   }
   @Post()
-  async subscribe(@Body() createEmailDto: Prisma.EmailCreateInput) {
+  async subscribe(@Body() createEmailDto: CreateEmailDto) {
     return await this.emailService.create(createEmailDto);
   }
   @Delete()
-  async unsubscribe(@Body() deleteEmailDto: Prisma.EmailCreateInput) {
+  async unsubscribe(@Body() deleteEmailDto: CreateEmailDto) {
     return await this.emailService.delete(deleteEmailDto);
   }
 }

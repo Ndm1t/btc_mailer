@@ -1,9 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { MailerService } from "@nestjs-modules/mailer";
 import { InjectMetric } from "@willsoto/nestjs-prometheus";
 import { Counter } from "prom-client";
 @Injectable()
 export class MailService {
+  private readonly logger = new Logger(MailService.name);
   constructor(
     private readonly mailerService: MailerService,
     @InjectMetric("send_email_count") public sentCounter: Counter<string>,
@@ -30,7 +31,7 @@ export class MailService {
         this.sentCounter.inc();
       } catch (e) {
         this.failedCounter.inc();
-        console.log(`Couldn't send mail to ${email}`);
+        this.logger.error(`Couldn't sent email to ${email}`, e.message);
       }
     });
     await Promise.all(emailPromises);

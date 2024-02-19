@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { DatabaseService } from "../database/database.service";
-import { Prisma } from "@prisma/client";
 import { EmailService } from "../email/email.service";
 import { MailService } from "../mail/mail.service";
 import { InjectMetric } from "@willsoto/nestjs-prometheus";
@@ -19,7 +18,7 @@ export class RateService {
     private readonly httpService: HttpService,
   ) {}
 
-  private async getRateFromApi(): Promise<number> {
+  public async getRateFromApi(): Promise<number> {
     let btcToUahData: Record<string, any>;
     try {
       btcToUahData = await firstValueFrom(

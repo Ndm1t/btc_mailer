@@ -19,5 +19,6 @@ import {
       help: "Gauge of the requested exchange rates from the service",
     }),
   ],
+  exports: [RateService],
 })
 export class RateModule {}
